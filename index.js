@@ -2,9 +2,11 @@ const express = require('express')
 const ws = require('ws')
 const https = require('https')
 const fs = require('fs')
+const registerRoutes = require('routes')
 
 const app = express()
 
+registerRoutes(app)
 app.get('/test', (req, res) => {
     res.send(req.query['q'])
 })

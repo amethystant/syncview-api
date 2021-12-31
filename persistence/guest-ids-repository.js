@@ -1,10 +1,12 @@
+const crypto = require('crypto')
+
 const ids = {}
 
 function generateOne() {
-    let id = 0
-    while (id in ids) {
-        id = Math.random()
-    }
+    let id
+    do {
+        id = crypto.randomUUID()
+    } while (id in ids)
 
     ids[id] = true
     return id

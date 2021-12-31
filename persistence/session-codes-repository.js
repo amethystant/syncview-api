@@ -1,14 +1,16 @@
+const {SESSION_CODE_LENGTH} = require('../constants')
+
 const codes = {}
 
 function generateOne() {
-    let code = ''
-    while (code in codes) {
+    let code
+    do {
         code = ''
         let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < SESSION_CODE_LENGTH; i++) {
             code += characters.charAt(Math.random() * characters.length)
         }
-    }
+    } while (code in codes)
 
     codes[code] = true
     return code
