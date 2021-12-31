@@ -1,0 +1,4 @@
+How to run:
+
+1. Generate SSL certificate, export pfx and replace cert.pfx with it (unless testing)
+2. > node .
