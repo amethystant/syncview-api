@@ -1,6 +1,6 @@
 const {Session} = require('../model/session')
 
-module.exports = (sessionsDb, constructGuest, sessionCodesRepo) => {
+module.exports = (sessionsDb, sessionCodesRepo, constructGuest) => {
 
     return (name, hostName, isWaitingRoom, isControlsAllowed, fileDescription) => {
         let host = constructGuest(hostName, true)
