@@ -1,4 +1,5 @@
 module.exports = (validation, findSession, constructGuest) => {
+
     return (name, sessionCode) => {
         let session = findSession(sessionCode)
         let validName = validation.guestName(name)

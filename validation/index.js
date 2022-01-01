@@ -17,6 +17,14 @@ module.exports = {
     },
 
     fileDescription(fileDescription) {
-        return true
+        return fileDescription
+    },
+
+    position(position) {
+        if (!position || !position.position || typeof position !== 'number' || position < 0) {
+            throw new InvalidInputError('Invalid position.')
+        }
+
+        return position
     }
 }

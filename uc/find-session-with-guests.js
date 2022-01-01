@@ -1,6 +1,7 @@
 const {NotFoundError} = require('../error')
 
 module.exports = (findSession) => {
+
     return (sessionCode, guestIds) => {
         let session = findSession(sessionCode)
         let foundIssue = false

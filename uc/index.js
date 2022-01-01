@@ -9,6 +9,7 @@ const getCreateSession = require('create-session')
 const getConstructGuest = require('construct-guest')
 const getAddGuest = require('add-guest')
 const getAdmitGuest = require('admit-guest')
+const getUpdateState = require('update-state')
 
 module.exports = {
     findSession: () => getFindSession(sessionsDb),
@@ -16,5 +17,6 @@ module.exports = {
     constructGuest: () => getConstructGuest(guestIdsRepo, validation),
     createSession: () => getCreateSession(sessionsDb, sessionCodesRepo, validation, this.constructGuest()),
     addGuest: () => getAddGuest(validation, this.findSession(), this.constructGuest()),
-    admitGuest: () => getAdmitGuest(this.findSessionWithGuests())
+    admitGuest: () => getAdmitGuest(this.findSessionWithGuests()),
+    updateState: () => getUpdateState(validation, this.findSessionWithGuests())
 }
