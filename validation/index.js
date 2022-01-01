@@ -1,6 +1,4 @@
-class InvalidInputError extends Error {
-    statusCode = 400
-}
+const {InvalidInputError} = require('../error')
 
 module.exports = {
 
@@ -18,7 +16,7 @@ module.exports = {
         return typeof value == 'boolean' ? value : throw new InvalidInputError('Not a boolean.')
     },
 
-    InvalidInputError: InvalidInputError
+    fileDescription(fileDescription) {
+        return true
+    }
 }
-
-// todo maybe split into format, integrity

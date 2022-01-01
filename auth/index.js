@@ -7,8 +7,8 @@ function generateToken(guestId) {
     return jwt.sign(guestId, TOKEN_SECRET, {expiresIn: `${SESSION_DURATION_MAX}ms`}, null)
 }
 
-function authenticateToken(token, guestId) {
-    return guestId === jwt.verify(token, TOKEN_SECRET, null, null) // todo test this
+function authenticateToken(token) {
+    return jwt.verify(token, TOKEN_SECRET, null, null)
 }
 
 module.exports = {generateToken, authenticateToken}

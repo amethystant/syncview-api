@@ -1,7 +1,8 @@
 const {Guest} = require('../model/guest')
 
-module.exports = (guestIdsRepo) => {
+module.exports = (guestIdsRepo, validation) => {
     return (name, isHost) => {
-        return new Guest(guestIdsRepo.generateOne(), name, isHost)
+        let validName = validation.guestName(name)
+        return new Guest(guestIdsRepo.generateOne(), validName, isHost)
     }
 }

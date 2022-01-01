@@ -1,13 +1,26 @@
 const {Session} = require('../model/session')
 
-module.exports = (sessionsDb, sessionCodesRepo, constructGuest) => {
+module.exports = (sessionsDb, sessionCodesRepo, validation, constructGuest) => {
 
     return (name, hostName, isWaitingRoom, isControlsAllowed, fileDescription) => {
-        let host = constructGuest(hostName, true)
+        let validName = validation.sessionName(name)
+        let validHostName = validation.guestName(hostName)
+        let validIsWaitingRoom = validation.boolean(isWaitingRoom)
+        let validIsControlsAllowed = validation.boolean(isControlsAllowed)
+        let validFileDescription = validation.fileDescription(fileDescription)
+
+        let host = constructGuest(validHostName, true)
         host.isAwaitingAdmission = false
 
         let code = sessionCodesRepo.generateOne()
-        let session = new Session(name, code, host, isWaitingRoom, isControlsAllowed, fileDescription)
+        let session = new Session(
+            validName,
+            code,
+            host,
+            validIsWaitingRoom,
+            validIsControlsAllowed,
+            validFileDescription
+        )
         sessionsDb[code] = session
 
         return session

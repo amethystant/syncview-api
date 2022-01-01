@@ -1,7 +1,8 @@
-module.exports = (sessionsDb, constructGuest) => {
+module.exports = (validation, findSession, constructGuest) => {
     return (name, sessionCode) => {
-        let guest = constructGuest(name, false)
-        let session = sessionsDb[sessionCode]
+        let session = findSession(sessionCode)
+        let validName = validation.guestName(name)
+        let guest = constructGuest(validName, false)
 
         if (session.isWaitingRoom) {
             guest.isAwaitingAdmission = true // todo notify admin
