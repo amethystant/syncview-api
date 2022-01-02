@@ -9,7 +9,7 @@ module.exports = (validation, findSession, constructGuest) => {
             guest.isAwaitingAdmission = true // todo notify admin
         }
 
-        session.guests += guest
+        session.guests[guest.id] = guest
         return guest
     }
 }

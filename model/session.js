@@ -11,7 +11,8 @@ class Session {
     constructor(name, code, host, isWaitingRoom, isControlsAllowed, fileDescription) {
         this.name = name
         this.#code = code
-        this.#guests = [host]
+        this.#guests = {}
+        this.#guests[host.id] = host
         this.isWaitingRoom = isWaitingRoom
         this.isControlsAllowed = isControlsAllowed
         this.#fileDescription = fileDescription
