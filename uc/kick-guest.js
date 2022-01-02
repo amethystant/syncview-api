@@ -7,7 +7,7 @@ module.exports = (findSessionWithGuests) => {
         let kickingGuest = session.guests[kickingGuestId]
         let kickedGuest = session.guests[kickedGuestId]
 
-        if (!kickingGuest.isHost) {
+        if (!kickingGuest.isHost || kickedGuest.isHost) {
             throw new AuthorizationError('Unauthorized.')
         }
 
