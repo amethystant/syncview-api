@@ -4,7 +4,7 @@ module.exports = (sessionDb) => {
 
     return (sessionCode) => {
         if (sessionCode && sessionCode in sessionDb) {
-            return sessionDb[sessionCode]
+            return sessionDb[sessionCode.toLowerCase()]
         }
 
         throw new NotFoundError('No session found.')

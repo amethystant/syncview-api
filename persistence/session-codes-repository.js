@@ -6,7 +6,7 @@ function generateOne() {
     let code
     do {
         code = ''
-        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        let characters = 'abcdefghijklmnopqrstuwvxyz'
         for (let i = 0; i < SESSION_CODE_LENGTH; i++) {
             code += characters.charAt(Math.random() * characters.length)
         }
