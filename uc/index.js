@@ -15,6 +15,7 @@ const getViewState = require('view-state')
 const getVerifyFile = require('verify-file')
 const getElevateGuest = require('elevate-guest')
 const getKickGuest = require('kick-guest')
+const getLeaveSession = require('leave-session')
 
 module.exports = {
     findSession: () => getFindSession(sessionsDb),
@@ -27,5 +28,6 @@ module.exports = {
     viewState: () => getViewState(SESSION_DURATION_MAX, this.findSessionWithGuests()),
     verifyFile: () => getVerifyFile(this.findSessionWithGuests()),
     elevateGuest: () => getElevateGuest(this.findSessionWithGuests()),
-    kickGuest: () => getKickGuest(this.findSessionWithGuests())
+    kickGuest: () => getKickGuest(this.findSessionWithGuests()),
+    leaveSession: () => getLeaveSession(this.findSessionWithGuests())
 }
