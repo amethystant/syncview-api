@@ -3,7 +3,7 @@ const {generateToken} = require('../auth')
 
 module.exports = (req, res) => {
     let sessionCreationResult = createSession(
-        req.body.name, // todo test what happens when param missing
+        req.body.name,
         req.body.hostName,
         req.body.isWaitingRoom,
         req.body.isControlsAllowed,

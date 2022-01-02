@@ -2,4 +2,5 @@ How to run:
 
 - Generate SSL certificate, export pfx and replace cert.pfx with it (unless testing)
 - Generate a new token secret with `require('crypto').randomBytes(64).toString('hex')` in node runtime, replace token in secrets.js with it (unless testing)
+- Set NODE_ENV to production (makes express not return call stacks, etc.) if in production
 - > node .
