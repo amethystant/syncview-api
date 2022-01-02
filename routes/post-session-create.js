@@ -14,6 +14,7 @@ module.exports = (req, res) => {
 
     res.status(201).json({
         sessionCode: sessionCreationResult.session.code,
+        guestId: sessionCreationResult.host.id,
         token: token
     })
 }

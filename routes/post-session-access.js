@@ -6,6 +6,7 @@ module.exports = (req, res) => {
     let token = generateToken(guest.id)
     res.status(201).json({
         token: token,
+        guestId: guest.id,
         isAwaitingAdmission: guest.isAwaitingAdmission
     })
 }
