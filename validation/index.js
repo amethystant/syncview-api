@@ -26,6 +26,9 @@ module.exports = {
     },
 
     fileDescription(fileDescription) {
+        if (!fileDescription) {
+            throw new InvalidInputError('Invalid file description.')
+        }
         return fileDescription
     },
 
