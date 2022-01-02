@@ -1,7 +1,7 @@
 const auth = require('../auth')
 
 module.exports = () => {
-    return (req, res, next) => { // todo test this
+    return (req, res, next) => {
         const throwErr = () => {
             let err = new Error('Unauthenticated.')
             err.statusCode = 401
@@ -15,7 +15,7 @@ module.exports = () => {
             throwErr()
         }
 
-        let tokenDecoded = auth.authenticateToken(token) // todo test this is actually a string
+        let tokenDecoded = auth.authenticateToken(token)
         if (typeof tokenDecoded !== 'string' && typeof tokenDecoded !== 'number') {
             throwErr()
         }

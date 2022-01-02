@@ -2,7 +2,7 @@ module.exports = (sessionDurationMax, findSessionWithGuests) => {
 
     return (sessionCode, guestId) => {
         let session = findSessionWithGuests(sessionCode, [guestId])
-        let guest = session[guestId]
+        let guest = session.guests[guestId]
 
         if (guest.isAwaitingAdmission) {
             return {
@@ -14,12 +14,32 @@ module.exports = (sessionDurationMax, findSessionWithGuests) => {
         let lastAction = session.actions.slice(-1)[0]
 
         let guestsView = []
-        for (let key in session.guests) {
+        let admissionRequests = []
+        for (const key in session.guests) {
             let guest = session.guests[key]
-            guestsView += {
+            let view = {
                 name: guest.name,
                 id: guest.id,
                 isHost: guest.isHost
+            }
+            if (!guest.isAwaitingAdmission) {
+                guestsView.push(view)
+            } else {
+                delete view.isHost
+                admissionRequests.push(view)
+            }
+        }
+
+        let lastActionView = null
+        if (lastAction) {
+            lastActionView = {
+                initiator: {
+                    guestId: lastAction.initiator,
+                    guestName: session.guests[lastAction.initiator].name
+                },
+                field: lastAction.field,
+                value: lastAction.value,
+                actionTs: lastAction.actionTs
             }
         }
 
@@ -34,29 +54,14 @@ module.exports = (sessionDurationMax, findSessionWithGuests) => {
                 position: session.position.position,
                 updateTs: session.position.updateTs
             },
-            lastAction: {
-                initiator: {
-                    guestId: lastAction.initiator,
-                    guestName: session.guests[lastAction.initiator]
-                },
-                field: lastAction.field,
-                value: lastAction.value,
-                actionTs: lastAction.actionTs
-            },
+            lastAction: lastActionView,
             guests: guestsView
         }
 
         if (guest.isHost) {
             result.isWaitingRoom = session.isWaitingRoom
             result.isControlsAllowed = session.isControlsAllowed
-            result.admissionRequests = []
-
-            for (let request of session.admissionRequests) {
-                result.admissionRequests += {
-                    guestId: request.guestId,
-                    guestName: request.guestName
-                }
-            }
+            result.admissionRequests = admissionRequests
         }
 
         return result

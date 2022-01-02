@@ -4,7 +4,7 @@ module.exports = (validation, findSessionWithGuests) => {
 
     return (sessionCode, guestId, state) => {
         let session = findSessionWithGuests(sessionCode, [guestId])
-        let guest = session[guestId]
+        let guest = session.guests[guestId]
 
         if (!guest.isHost && (!session.isControlsAllowed || guest.isAwaitingAdmission)) {
             throw new AuthorizationError('Controls not granted.')
@@ -31,53 +31,53 @@ module.exports = (validation, findSessionWithGuests) => {
 
         if (name) {
             session.name = name
-            session.actions += {
+            session.actions.push({
                 initiator: guestId,
                 field: 'name',
                 value: name,
                 actionTs: Date.now()
-            }
+            })
         }
 
         if (isWaitingRoom) {
             session.isWaitingRoom = isWaitingRoom
-            session.actions += {
+            session.actions.push({
                 initiator: guestId,
                 field: 'isWaitingRoom',
                 value: isWaitingRoom,
                 actionTs: Date.now()
-            }
+            })
         }
 
         if (isControlsAllowed) {
             session.isControlsAllowed = isControlsAllowed
-            session.actions += {
+            session.actions.push({
                 initiator: guestId,
                 field: 'isControlsAllowed',
                 value: isControlsAllowed,
                 actionTs: Date.now()
-            }
+            })
         }
 
         if (isPlaying) {
             session.isPlaying = isPlaying
-            session.actions += {
+            session.actions.push({
                 initiator: guestId,
                 field: 'isPlaying',
                 value: isPlaying,
                 actionTs: Date.now()
-            }
+            })
         }
 
         if (position) {
             session.position.position = position.position
             session.position.updateTs = Date.now()
-            session.actions += {
+            session.actions.push({
                 initiator: guestId,
                 field: 'position',
                 value: session.position,
                 actionTs: Date.now()
-            }
+            })
         }
     }
 }

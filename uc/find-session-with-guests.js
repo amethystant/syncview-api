@@ -6,7 +6,7 @@ module.exports = (findSession) => {
         let session = findSession(sessionCode)
         let foundIssue = false
         for (const guestId of guestIds) {
-            if (!(guestId && guestId in session)) {
+            if (!(guestId in session.guests)) {
                 foundIssue = true
             }
         }
