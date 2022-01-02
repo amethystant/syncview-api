@@ -4,7 +4,7 @@ const {TOKEN_SECRET} = require('../secrets')
 const {SESSION_DURATION_MAX} = require('../constants')
 
 function generateToken(guestId) {
-    return jwt.sign(guestId, TOKEN_SECRET, {expiresIn: `${SESSION_DURATION_MAX}ms`}, null)
+    return jwt.sign(guestId, TOKEN_SECRET, null, null)
 }
 
 function authenticateToken(token) {
