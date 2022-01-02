@@ -9,7 +9,7 @@ const putSessionState = require('./put-session-state')
 const getSessionState = require('./get-session-state')
 const getSessionFileVerify = require('./get-session-file-verify')
 const putGuestElevate = require('./put-guest-elevate')
-const putGuestKick = require('./put-guest-kick')
+const postGuestKick = require('./post-guest-kick')
 const postSessionLeave = require('./post-session-leave')
 
 // todo figure out how to make express not return call stack for errors
@@ -21,6 +21,6 @@ module.exports = app => {
     app.get('/session/:code/state', authenticateMw(), getSessionState)
     app.get('/session/:code/file-verify', express.json(), authenticateMw(), getSessionFileVerify)
     app.put('/session/:code/guest/:guestId/elevate', authenticateMw(), putGuestElevate)
-    app.put('/session/:code/guest/:guestId/kick', authenticateMw(), putGuestKick)
+    app.post('/session/:code/guest/:guestId/kick', authenticateMw(), postGuestKick)
     app.put('/session/:code/leave', authenticateMw(), postSessionLeave)
 }
