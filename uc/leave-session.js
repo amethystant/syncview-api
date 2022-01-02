@@ -9,15 +9,19 @@ module.exports = (findSessionWithGuests) => {
                 let foundAnotherHost = false
                 let hostCandidateId
                 for (let cmpGuestId in session.guests) {
-                    hostCandidateId = cmpGuestId
+                    if (!session.guests[cmpGuestId].isAwaitingAdmission) {
+                        hostCandidateId = cmpGuestId
+                    }
                     if (session.guests[cmpGuestId].isHost && cmpGuestId != guestId) {
                         foundAnotherHost = true
                     }
                 }
 
-                if (!foundAnotherHost) {
+                if (!foundAnotherHost && hostCandidateId) {
                     session.guests[hostCandidateId].isHost = true // todo notify
                 }
+
+                // todo delete session if only waiting or none users are left
             }
         }
 

@@ -21,5 +21,5 @@ module.exports = app => {
     app.get('/session/:code/file-verify', express.json(), authenticateMw(), getSessionFileVerify)
     app.put('/session/:code/guest/:guestId/elevate', authenticateMw(), putGuestElevate)
     app.post('/session/:code/guest/:guestId/kick', authenticateMw(), postGuestKick)
-    app.put('/session/:code/leave', authenticateMw(), postSessionLeave)
+    app.post('/session/:code/leave', authenticateMw(), postSessionLeave)
 }
