@@ -9,6 +9,7 @@ const putSessionState = require('put-session-state')
 const getSessionState = require('get-session-state')
 const getSessionFileVerify = require('get-session-file-verify')
 const putGuestElevate = require('put-guest-elevate')
+const putGuestKick = require('put-guest-kick')
 
 module.exports = app => {
     app.post('session/create', express.json(), postSessionCreate)
@@ -18,4 +19,5 @@ module.exports = app => {
     app.get('session/:code/state', authenticateMw(), getSessionState)
     app.get('session/:code/file-verify', express.json(), authenticateMw(), getSessionFileVerify)
     app.put('session/:code/guest/:guestId/elevate', authenticateMw(), putGuestElevate)
+    app.put('session/:code/guest/:guestId/kick', authenticateMw(), putGuestKick)
 }
