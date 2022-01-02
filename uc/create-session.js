@@ -23,6 +23,9 @@ module.exports = (sessionsDb, sessionCodesRepo, validation, constructGuest) => {
         )
         sessionsDb[code] = session
 
-        return session
+        return {
+            host: host,
+            session: session
+        }
     }
 }

@@ -2,7 +2,7 @@ const createSession = require('../uc').createSession()
 const {generateToken} = require('../auth')
 
 module.exports = (req, res) => {
-    let session = createSession(
+    let sessionCreationResult = createSession(
         req.body.name, // todo test what happens when param missing
         req.body.hostName,
         req.body.isWaitingRoom,
@@ -10,10 +10,10 @@ module.exports = (req, res) => {
         req.body.fileDescription
     )
 
-    let token = generateToken(session.guests[0].id)
+    let token = generateToken(sessionCreationResult.host.id)
 
     res.status(201).json({
-        sessionCode: session.code,
+        sessionCode: sessionCreationResult.session.code,
         token: token
     })
 }
