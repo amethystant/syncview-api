@@ -1,4 +1,4 @@
-const {Position} = require('position')
+const {Position} = require('./position')
 
 class Session {
 

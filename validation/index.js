@@ -4,16 +4,25 @@ module.exports = {
 
     guestName(guestName) {
         let str = guestName.toString()
-        return (str && str.length <= 20) ? str : throw new InvalidInputError('Invalid guest name.')
+        if (!str || str.length > 20) {
+            throw new InvalidInputError('Invalid guest name.')
+        }
+        return str
     },
 
     sessionName(sessionName) {
         let str = sessionName.toString()
-        return (str && str.length <= 20) ? str : throw new InvalidInputError('Invalid session name.')
+        if (!str || str.length > 20) {
+            throw new InvalidInputError('Invalid session name.')
+        }
+        return str
     },
 
     boolean(value) {
-        return typeof value == 'boolean' ? value : throw new InvalidInputError('Not a boolean.')
+        if (typeof value !== 'boolean') {
+            throw new InvalidInputError('Not a boolean.')
+        }
+        return value
     },
 
     fileDescription(fileDescription) {

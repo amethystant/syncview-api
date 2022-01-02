@@ -2,7 +2,7 @@ const express = require('express')
 const ws = require('ws')
 const https = require('https')
 const fs = require('fs')
-const registerRoutes = require('routes')
+const registerRoutes = require('./routes')
 
 const app = express()
 
