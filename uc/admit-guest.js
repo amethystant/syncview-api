@@ -3,7 +3,7 @@ const {AuthorizationError} = require('../error')
 module.exports = (findSessionWithGuests) => {
 
     return (sessionCode, admitorId, admitteeId) => {
-        let session = findSessionWithGuests([admitorId, admitteeId])
+        let session = findSessionWithGuests(sessionCode, [admitorId, admitteeId])
 
         let admitor = session.guests[admitorId]
         if (!admitor.isHost) {

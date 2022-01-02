@@ -12,7 +12,6 @@ const putGuestElevate = require('./put-guest-elevate')
 const postGuestKick = require('./post-guest-kick')
 const postSessionLeave = require('./post-session-leave')
 
-// todo figure out how to make express not return call stack for errors
 module.exports = app => {
     app.post('/session/create', express.json(), postSessionCreate)
     app.post('/session/:code/access', express.json(), postSessionAccess)
