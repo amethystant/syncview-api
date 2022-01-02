@@ -3,16 +3,16 @@ const {InvalidInputError} = require('../error')
 module.exports = {
 
     guestName(guestName) {
-        let str = guestName.toString()
-        if (!str || str.length > 20) {
+        let str
+        if (!guestName || (str = guestName.toString()).length > 20) {
             throw new InvalidInputError('Invalid guest name.')
         }
         return str
     },
 
     sessionName(sessionName) {
-        let str = sessionName.toString()
-        if (!str || str.length > 20) {
+        let str
+        if (!sessionName || (str = sessionName.toString()).length > 20) {
             throw new InvalidInputError('Invalid session name.')
         }
         return str
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     position(position) {
-        if (!position || !position.position || typeof position !== 'number' || position < 0) {
+        if (!position || !position.position || typeof position.position !== 'number' || position.position < 0) {
             throw new InvalidInputError('Invalid position.')
         }
 
