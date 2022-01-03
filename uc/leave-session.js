@@ -1,4 +1,4 @@
-module.exports = (findSessionWithGuests) => {
+module.exports = (findSessionWithGuests, endSession) => {
 
     return (sessionCode, guestId) => {
         let session = findSessionWithGuests(sessionCode, [guestId])
@@ -20,11 +20,20 @@ module.exports = (findSessionWithGuests) => {
                 if (!foundAnotherHost && hostCandidateId) {
                     session.guests[hostCandidateId].isHost = true // todo notify
                 }
-
-                // todo delete session if only waiting or none users are left
             }
         }
 
         delete session.guests[guestId] // todo notify
+
+        let foundValidUser = false
+        for (const guestId in session.guests) {
+            if (!session.guests[guestId].isAwaitingAdmission) {
+                foundValidUser = true
+            }
+        }
+
+        if (!foundValidUser) {
+            endSession(session)
+        }
     }
 }
