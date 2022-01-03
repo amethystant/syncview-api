@@ -9,5 +9,9 @@ module.exports = (findSessionWithGuests) => {
         }
 
         guest.ws = ws
+
+        ws.on('close', () => {
+            delete guest.ws
+        })
     }
 }
