@@ -12,6 +12,8 @@ module.exports = (findSessionWithGuests) => {
         }
 
         delete session.guests[kickedGuestId]
-        // todo notify kicked guest now, don't close ws connection though
+        if (kickedGuest.ws) {
+            kickedGuest.ws.close()
+        }
     }
 }

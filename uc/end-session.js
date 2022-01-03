@@ -1,8 +1,13 @@
 module.exports = (sessionsDb) => {
 
     return (session) => {
-
-        // todo notify guests
         delete sessionsDb[session.code]
+
+        for (const guestId in session.guests) {
+            let guest = session.guests[guestId]
+            if (guest.ws) {
+                guest.ws.close()
+            }
+        }
     }
 }
