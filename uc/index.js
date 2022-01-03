@@ -7,12 +7,14 @@ const validation = require('../validation')
 
 const getFindSession = require('./find-session')
 const getFindSessionWithGuests = require('./find-session-with-guests')
-const getCreateSession = require('./create-session')
 const getConstructGuest = require('./construct-guest')
+const getCreateSession = require('./create-session')
+const getViewState = require('./view-state')
+const getSendStateUpdate = require('./send-state-update')
+const getFindGuests = require('./find-guests')
 const getAddGuest = require('./add-guest')
 const getAdmitGuest = require('./admit-guest')
 const getUpdateState = require('./update-state')
-const getViewState = require('./view-state')
 const getVerifyFile = require('./verify-file')
 const getElevateGuest = require('./elevate-guest')
 const getKickGuest = require('./kick-guest')
@@ -34,15 +36,28 @@ exports.createSession = () => getCreateSession(
     validation,
     exports.constructGuest()
 )
-exports.addGuest = () => getAddGuest(validation, exports.findSession(), exports.constructGuest())
+exports.viewState = () => getViewState(SESSION_DURATION_MAX, exports.findSessionWithGuests())
+exports.sendStateUpdate = () => getSendStateUpdate(exports.viewState())
+exports.findGuests = () => getFindGuests()
+exports.addGuest = () => getAddGuest(
+    validation,
+    exports.findSession(),
+    exports.constructGuest(),
+    exports.findGuests(),
+    exports.sendStateUpdate()
+)
 exports.admitGuest = () => getAdmitGuest(exports.findSessionWithGuests())
 exports.updateState = () => getUpdateState(validation, exports.findSessionWithGuests())
-exports.viewState = () => getViewState(SESSION_DURATION_MAX, exports.findSessionWithGuests())
 exports.verifyFile = () => getVerifyFile(exports.findSessionWithGuests())
 exports.elevateGuest = () => getElevateGuest(exports.findSessionWithGuests())
 exports.kickGuest = () => getKickGuest(exports.findSessionWithGuests())
 exports.endSession = () => getEndSession(sessionsDb)
 exports.leaveSession = () => getLeaveSession(exports.findSessionWithGuests(), exports.endSession())
 exports.connectGuestWs = () => getConnectGuestWs(exports.findSessionWithGuests())
-exports.cleanUpSessions = () => getCleanUpSessions(SESSION_DURATION_MAX, sessionsDb, sessionCleanUpRepo, exports.endSession())
+exports.cleanUpSessions = () => getCleanUpSessions(
+    SESSION_DURATION_MAX,
+    sessionsDb,
+    sessionCleanUpRepo,
+    exports.endSession()
+)
 exports.scheduleSessionCleanups = () => getScheduleSessionCleanups(SESSION_CLEANUP_INTERVAL, exports.cleanUpSessions())
