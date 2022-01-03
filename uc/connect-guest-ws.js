@@ -12,6 +12,7 @@ module.exports = (findSessionWithGuests) => {
 
         ws.on('close', () => {
             delete guest.ws
+            // todo notify everyone (guest offline)
         })
     }
 }

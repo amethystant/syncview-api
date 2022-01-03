@@ -20,7 +20,8 @@ module.exports = (sessionDurationMax, findSessionWithGuests) => {
             let view = {
                 name: guest.name,
                 id: guest.id,
-                isHost: guest.isHost
+                isHost: guest.isHost,
+                isOnline: !!guest.ws
             }
             if (!guest.isAwaitingAdmission) {
                 guestsView.push(view)
