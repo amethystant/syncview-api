@@ -1,6 +1,6 @@
 const {Session} = require('../model/session')
 
-module.exports = (sessionsDb, sessionCodesRepo, validation, constructGuest) => {
+module.exports = (sessionsDb, sessionCodesRepo, sessionCleanupRepo, validation, constructGuest) => {
 
     return (name, hostName, isWaitingRoom, isControlsAllowed, fileDescription) => {
         let validName = validation.sessionName(name)
@@ -22,6 +22,7 @@ module.exports = (sessionsDb, sessionCodesRepo, validation, constructGuest) => {
             validFileDescription
         )
         sessionsDb[code] = session
+        sessionCleanupRepo.registerSession(code, session.startTs)
 
         return {
             host: host,

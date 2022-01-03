@@ -1,6 +1,7 @@
-const {SESSION_DURATION_MAX} = require('../constants')
+const {SESSION_DURATION_MAX, SESSION_CLEANUP_INTERVAL} = require('../constants')
 const sessionsDb = require('../persistence/sessions-db')
 const sessionCodesRepo = require('../persistence/session-codes-repository')
+const createSessionCleanUpRepo = require('../persistence/session-cleanup-repository')
 const guestIdsRepo = require('../persistence/guest-ids-repository')
 const validation = require('../validation')
 
@@ -18,11 +19,21 @@ const getKickGuest = require('./kick-guest')
 const getLeaveSession = require('./leave-session')
 const getEndSession = require('./end-session')
 const getConnectGuestWs = require('./connect-guest-ws')
+const getCleanUpSessions = require('./clean-up-sessions')
+const getScheduleSessionCleanups = require('./schedule-session-cleanups')
+
+const sessionCleanUpRepo = createSessionCleanUpRepo(SESSION_DURATION_MAX, SESSION_CLEANUP_INTERVAL)
 
 exports.findSession = () => getFindSession(sessionsDb)
 exports.findSessionWithGuests = () => getFindSessionWithGuests(exports.findSession())
 exports.constructGuest = () => getConstructGuest(guestIdsRepo, validation)
-exports.createSession = () => getCreateSession(sessionsDb, sessionCodesRepo, validation, exports.constructGuest())
+exports.createSession = () => getCreateSession(
+    sessionsDb,
+    sessionCodesRepo,
+    sessionCleanUpRepo,
+    validation,
+    exports.constructGuest()
+)
 exports.addGuest = () => getAddGuest(validation, exports.findSession(), exports.constructGuest())
 exports.admitGuest = () => getAdmitGuest(exports.findSessionWithGuests())
 exports.updateState = () => getUpdateState(validation, exports.findSessionWithGuests())
@@ -33,3 +44,5 @@ exports.kickGuest = () => getKickGuest(exports.findSessionWithGuests())
 exports.endSession = () => getEndSession(sessionsDb)
 exports.leaveSession = () => getLeaveSession(exports.findSessionWithGuests(), exports.endSession())
 exports.connectGuestWs = () => getConnectGuestWs(exports.findSessionWithGuests())
+exports.cleanUpSessions = () => getCleanUpSessions(SESSION_DURATION_MAX, sessionsDb, sessionCleanUpRepo, exports.endSession())
+exports.scheduleSessionCleanups = () => getScheduleSessionCleanups(SESSION_CLEANUP_INTERVAL, exports.cleanUpSessions())

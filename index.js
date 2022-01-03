@@ -4,9 +4,11 @@ const fs = require('fs')
 
 const registerRoutes = require('./routes')
 const createWsServer = require('./ws/create-ws-server')
+const scheduleSessionCleanups = require('./uc').scheduleSessionCleanups()
 
 const app = express()
 
+scheduleSessionCleanups()
 registerRoutes(app)
 
 const httpsOptions = {
