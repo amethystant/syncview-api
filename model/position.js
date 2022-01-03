@@ -18,4 +18,3 @@ class Position {
 }
 
 module.exports = {Position}
-// todo update code to use this class

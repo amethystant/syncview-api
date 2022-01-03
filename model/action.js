@@ -1,21 +1,27 @@
 class Action {
 
-    #actionType
     #initiator
+    #field
+    #value
     #actionTs
 
-    constructor(actionType, initiator, actionTs) {
-        this.#actionType = actionType
+    constructor(initiator, field, value, actionTs) {
         this.#initiator = initiator
+        this.#field = field
+        this.#value = value
         this.#actionTs = actionTs
-    }
-
-    get actionType() {
-        return this.#actionType
     }
 
     get initiator() {
         return this.#initiator
+    }
+
+    get field() {
+        return this.#field
+    }
+
+    get value() {
+        return this.#value
     }
 
     get actionTs() {
@@ -24,4 +30,3 @@ class Action {
 }
 
 module.exports = {Action}
-// todo update code to use this class
