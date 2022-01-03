@@ -1,4 +1,5 @@
 const {AuthorizationError} = require('../error')
+const {Position} = require('../model/position')
 
 module.exports = (validation, findSessionWithGuests) => {
 
@@ -39,7 +40,7 @@ module.exports = (validation, findSessionWithGuests) => {
             })
         }
 
-        if (isWaitingRoom) {
+        if (typeof isWaitingRoom == 'boolean') {
             session.isWaitingRoom = isWaitingRoom
             session.actions.push({
                 initiator: guestId,
@@ -49,7 +50,7 @@ module.exports = (validation, findSessionWithGuests) => {
             })
         }
 
-        if (isControlsAllowed) {
+        if (typeof isControlsAllowed == 'boolean') {
             session.isControlsAllowed = isControlsAllowed
             session.actions.push({
                 initiator: guestId,
@@ -59,7 +60,7 @@ module.exports = (validation, findSessionWithGuests) => {
             })
         }
 
-        if (isPlaying) {
+        if (typeof isPlaying == 'boolean') {
             session.isPlaying = isPlaying
             session.actions.push({
                 initiator: guestId,
@@ -70,8 +71,7 @@ module.exports = (validation, findSessionWithGuests) => {
         }
 
         if (position) {
-            session.position.position = position.position
-            session.position.updateTs = Date.now()
+            session.position = new Position(position.position, Date.now())
             session.actions.push({
                 initiator: guestId,
                 field: 'position',

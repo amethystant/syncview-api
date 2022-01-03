@@ -38,7 +38,6 @@ module.exports = (sessionDurationMax, findSessionWithGuests) => {
                     guestName: session.guests[lastAction.initiator].name
                 },
                 field: lastAction.field,
-                value: lastAction.value,
                 actionTs: lastAction.actionTs
             }
         }
