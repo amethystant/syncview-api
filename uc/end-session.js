@@ -1,4 +1,4 @@
-module.exports = (sessionsDb) => {
+module.exports = (sessionsDb, sessionCodesRepo) => {
 
     return (session) => {
         delete sessionsDb[session.code]
@@ -9,5 +9,7 @@ module.exports = (sessionsDb) => {
                 guest.ws.close()
             }
         }
+
+        sessionCodesRepo.deleteOne(session.code)
     }
 }

@@ -68,7 +68,7 @@ exports.kickGuest = () => getKickGuest(
     exports.findGuests(),
     exports.sendStateUpdate()
 )
-exports.endSession = () => getEndSession(sessionsDb)
+exports.endSession = () => getEndSession(sessionsDb, sessionCodesRepo)
 exports.leaveSession = () => getLeaveSession(
     exports.findSessionWithGuests(),
     exports.endSession(),
