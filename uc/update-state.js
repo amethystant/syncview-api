@@ -38,12 +38,10 @@ module.exports = (validation, findSessionWithGuests) => {
 
         if (typeof isWaitingRoom == 'boolean') {
             session.isWaitingRoom = isWaitingRoom
-            session.actions.push(new Action(guestId, 'isWaitingRoom', isWaitingRoom, Date.now()))
         }
 
         if (typeof isControlsAllowed == 'boolean') {
             session.isControlsAllowed = isControlsAllowed
-            session.actions.push(new Action(guestId, 'isControlsAllowed', isControlsAllowed, Date.now()))
         }
 
         if (typeof isPlaying == 'boolean') {
