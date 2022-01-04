@@ -33,11 +33,13 @@ module.exports = (sessionDurationMax, findSessionWithGuests) => {
 
         let lastActionView = null
         if (lastAction) {
+            let lastActionInitiator = session.guests[lastAction.initiator]
+            let initiatorView = lastActionInitiator ? {
+                guestId: lastActionInitiator.id,
+                guestName: lastActionInitiator.name
+            } : null
             lastActionView = {
-                initiator: {
-                    guestId: lastAction.initiator,
-                    guestName: session.guests[lastAction.initiator].name
-                },
+                initiator: initiatorView,
                 field: lastAction.field,
                 actionTs: lastAction.actionTs
             }
