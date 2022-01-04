@@ -9,10 +9,11 @@ module.exports = (findSessionWithGuests, endSession) => {
                 let foundAnotherHost = false
                 let hostCandidateId
                 for (let cmpGuestId in session.guests) {
-                    if (!session.guests[cmpGuestId].isAwaitingAdmission) {
+                    let cmpGuest = session.guests[cmpGuestId]
+                    if (!cmpGuest.isAwaitingAdmission && cmpGuest.ws) {
                         hostCandidateId = cmpGuestId
                     }
-                    if (session.guests[cmpGuestId].isHost && cmpGuestId != guestId) {
+                    if (cmpGuest.isHost && cmpGuestId != guestId) {
                         foundAnotherHost = true
                     }
                 }
