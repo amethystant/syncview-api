@@ -75,7 +75,11 @@ exports.leaveSession = () => getLeaveSession(
     exports.findGuests(),
     exports.sendStateUpdate()
 )
-exports.connectGuestWs = () => getConnectGuestWs(exports.findSessionWithGuests())
+exports.connectGuestWs = () => getConnectGuestWs(
+    exports.findSessionWithGuests(),
+    exports.findGuests(),
+    exports.sendStateUpdate()
+)
 exports.cleanUpSessions = () => getCleanUpSessions(
     SESSION_DURATION_MAX,
     sessionsDb,

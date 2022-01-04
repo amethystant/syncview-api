@@ -1,4 +1,4 @@
-module.exports = (findSessionWithGuests) => {
+module.exports = (findSessionWithGuests, findGuests, sendStateUpdate) => {
 
     return (sessionCode, guestId, ws) => {
         let session = findSessionWithGuests(sessionCode, [guestId])
@@ -9,10 +9,11 @@ module.exports = (findSessionWithGuests) => {
         }
 
         guest.ws = ws
+        sendStateUpdate(session, findGuests(session))
 
         ws.on('close', () => {
             delete guest.ws
-            // todo notify everyone (guest offline)
+            sendStateUpdate(session, findGuests(session))
         })
     }
 }
