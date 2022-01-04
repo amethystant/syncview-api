@@ -1,6 +1,6 @@
 const {AuthorizationError} = require('../error')
 
-module.exports = (findSessionWithGuests) => {
+module.exports = (findSessionWithGuests, findGuests, sendStateUpdate) => {
 
     return (sessionCode, kickingGuestId, kickedGuestId) => {
         let session = findSessionWithGuests(sessionCode, [kickingGuestId, kickedGuestId])
@@ -15,5 +15,6 @@ module.exports = (findSessionWithGuests) => {
         if (kickedGuest.ws) {
             kickedGuest.ws.close()
         }
+        sendStateUpdate(session, findGuests(session))
     }
 }

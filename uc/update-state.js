@@ -2,7 +2,7 @@ const {AuthorizationError} = require('../error')
 const {Position} = require('../model/position')
 const {Action} = require('../model/action')
 
-module.exports = (validation, findSessionWithGuests) => {
+module.exports = (validation, findSessionWithGuests, findGuests, sendStateUpdate) => {
 
     return (sessionCode, guestId, state) => {
         let session = findSessionWithGuests(sessionCode, [guestId])
@@ -53,5 +53,8 @@ module.exports = (validation, findSessionWithGuests) => {
             session.position = new Position(position.position, Date.now())
             session.actions.push(new Action(guestId, 'position', session.position, Date.now()))
         }
+
+        let guests = findGuests(session)
+        sendStateUpdate(session, guests)
     }
 }

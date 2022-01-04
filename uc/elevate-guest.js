@@ -1,6 +1,6 @@
 const {AuthorizationError} = require('../error')
 
-module.exports = (findSessionWithGuests) => {
+module.exports = (findSessionWithGuests, findGuests, sendStateUpdate) => {
 
     return (sessionCode, elevatingGuestId, elevatedGuestId) => {
         let session = findSessionWithGuests(sessionCode, [elevatingGuestId, elevatedGuestId])
@@ -12,6 +12,7 @@ module.exports = (findSessionWithGuests) => {
         }
 
         elevatedGuest.isAwaitingAdmission = false
-        elevatedGuest.isHost = true // todo notify guest
+        elevatedGuest.isHost = true
+        sendStateUpdate(session, findGuests(session))
     }
 }

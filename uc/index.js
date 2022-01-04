@@ -46,13 +46,35 @@ exports.addGuest = () => getAddGuest(
     exports.findGuests(),
     exports.sendStateUpdate()
 )
-exports.admitGuest = () => getAdmitGuest(exports.findSessionWithGuests())
-exports.updateState = () => getUpdateState(validation, exports.findSessionWithGuests())
+exports.admitGuest = () => getAdmitGuest(
+    exports.findSessionWithGuests(),
+    exports.findGuests(),
+    exports.sendStateUpdate()
+)
+exports.updateState = () => getUpdateState(
+    validation,
+    exports.findSessionWithGuests(),
+    exports.findGuests(),
+    exports.sendStateUpdate()
+)
 exports.verifyFile = () => getVerifyFile(exports.findSessionWithGuests())
-exports.elevateGuest = () => getElevateGuest(exports.findSessionWithGuests())
-exports.kickGuest = () => getKickGuest(exports.findSessionWithGuests())
+exports.elevateGuest = () => getElevateGuest(
+    exports.findSessionWithGuests(),
+    exports.findGuests(),
+    exports.sendStateUpdate()
+)
+exports.kickGuest = () => getKickGuest(
+    exports.findSessionWithGuests(),
+    exports.findGuests(),
+    exports.sendStateUpdate()
+)
 exports.endSession = () => getEndSession(sessionsDb)
-exports.leaveSession = () => getLeaveSession(exports.findSessionWithGuests(), exports.endSession())
+exports.leaveSession = () => getLeaveSession(
+    exports.findSessionWithGuests(),
+    exports.endSession(),
+    exports.findGuests(),
+    exports.sendStateUpdate()
+)
 exports.connectGuestWs = () => getConnectGuestWs(exports.findSessionWithGuests())
 exports.cleanUpSessions = () => getCleanUpSessions(
     SESSION_DURATION_MAX,
