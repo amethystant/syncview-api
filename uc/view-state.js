@@ -48,6 +48,7 @@ module.exports = (sessionDurationMax, findSessionWithGuests) => {
         let result = {
             name: session.name,
             code: session.code,
+            guestId: guestId,
             isAwaitingAdmission: guest.isAwaitingAdmission,
             isControlsGranted: guest.isHost || session.isControlsAllowed,
             expirationTs: session.startTs + sessionDurationMax,
