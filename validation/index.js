@@ -33,7 +33,11 @@ module.exports = {
     },
 
     position(position) {
-        if (!position || !position.position || typeof position.position !== 'number' || position.position < 0) {
+        if (!position ||
+            (position.position !== 0 && !position.position) ||
+            typeof position.position !== 'number' ||
+            position.position < 0) {
+
             throw new InvalidInputError('Invalid position.')
         }
 
