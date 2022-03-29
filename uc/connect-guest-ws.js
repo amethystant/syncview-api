@@ -12,7 +12,9 @@ module.exports = (findSessionWithGuests, findGuests, sendStateUpdate) => {
         sendStateUpdate(session, findGuests(session))
 
         ws.on('close', () => {
-            delete guest.ws
+            if (guest.ws === ws) {
+                delete guest.ws
+            }
             sendStateUpdate(session, findGuests(session))
         })
     }
