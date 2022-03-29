@@ -17,7 +17,7 @@ class Session {
         this.isControlsAllowed = isControlsAllowed
         this.#fileDescription = fileDescription
         this.isPlaying = false
-        this.position = new Position(0, 0)
+        this.position = new Position(0, Date.now())
     }
 
     get code() {
