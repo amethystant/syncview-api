@@ -15,7 +15,13 @@ module.exports = () => {
             throwErr()
         }
 
-        let tokenDecoded = auth.authenticateToken(token)
+        let tokenDecoded
+        try {
+            tokenDecoded = auth.authenticateToken(token)
+        } catch (e) {
+            throwErr()
+        }
+
         if (typeof tokenDecoded !== 'string' && typeof tokenDecoded !== 'number') {
             throwErr()
         }
