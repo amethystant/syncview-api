@@ -52,6 +52,12 @@ module.exports = (validation, findSessionWithGuests, findGuests, sendStateUpdate
         if (position) {
             session.position = new Position(position.position, Date.now())
             session.actions.push(new Action(guestId, 'position', session.position, Date.now()))
+        } else if (isPlaying === false) {
+            const dateNow = Date.now()
+            const timeDiff = dateNow - session.position.updateTs
+            session.position = new Position(session.position.position + timeDiff, dateNow)
+        } else if (isPlaying === true) {
+            session.position = new Position(session.position.position, Date.now())
         }
 
         let guests = findGuests(session)
