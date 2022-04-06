@@ -1,7 +1,8 @@
 const cors = require('cors')
+const constants = require('../constants')
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: constants.CORS_CLIENT_URLS,
     credentials: true
 }
 
